@@ -8,6 +8,7 @@ import {
   Calculator,
   SplitSquareHorizontal,
 } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import {
   isValidCIDR,
   parseCIDR,
@@ -125,6 +126,9 @@ export default function SubnetCalculatorPage() {
             <span className="font-semibold text-sm">NetArchitect</span>
           </Link>
           <span className="text-sm text-muted-foreground">/ Subnet Calculator</span>
+          <div className="ml-auto">
+            <ThemeToggle />
+          </div>
         </div>
       </nav>
 

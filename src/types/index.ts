@@ -209,3 +209,236 @@ export interface DeviceTemplate {
   description: string;
   defaultConfig?: Partial<DeviceConfig>;
 }
+
+// ============================================================
+// Failure Simulation
+// ============================================================
+
+export type FailureType = "device" | "connection" | "multiple";
+export type ImpactLevel = "low" | "medium" | "high" | "critical";
+
+export interface FailureSimulationResult {
+  id: string;
+  failedNodeIds: string[];
+  failedEdgeIds: string[];
+  reachableNodeIds: string[];
+  unreachableNodeIds: string[];
+  affectedServices: { nodeId: string; label: string; deviceType: DeviceType }[];
+  affectedVlans: { vlanId: number; name: string }[];
+  impactLevel: ImpactLevel;
+  totalNodes: number;
+  reachableCount: number;
+  unreachableCount: number;
+  connectivityRatio: number;
+  affectedSegments: string[];
+  recommendation: string;
+  createdAt: string;
+}
+
+// ============================================================
+// Architecture Scenarios
+// ============================================================
+
+export interface ArchitectureScenario {
+  id: string;
+  projectId: string;
+  name: string;
+  nodes: NetworkNode[];
+  edges: NetworkEdge[];
+  vlans: VLAN[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ScenarioDiff {
+  addedNodeIds: string[];
+  removedNodeIds: string[];
+  modifiedNodeIds: string[];
+  addedEdgeIds: string[];
+  removedEdgeIds: string[];
+  modifiedEdgeIds: string[];
+  addedVlanIds: string[];
+  removedVlanIds: string[];
+  modifiedVlanIds: string[];
+}
+
+// ============================================================
+// Network Scores
+// ============================================================
+
+export interface NetworkScore {
+  overall: number;
+  security: number;
+  connectivity: number;
+  redundancy: number;
+  configuration: number;
+  segmentation: number;
+  capacity: number;
+}
+
+export interface ScoreDeduction {
+  points: number;
+  reason: string;
+  ruleId: string;
+}
+
+export interface ScoreImprovement {
+  points: number;
+  reason: string;
+}
+
+export interface NetworkScoreDetail {
+  score: NetworkScore;
+  deductions: ScoreDeduction[];
+  improvements: ScoreImprovement[];
+  grade: string;
+  gradeColor: string;
+  summary: string;
+}
+
+export interface ResilienceScore {
+  overall: number;
+  criticalInfrastructureRedundancy: number;
+  redundantPaths: number;
+  failureTolerance: number;
+}
+
+// ============================================================
+// Security Exposure
+// ============================================================
+
+export type SecuritySeverity = "info" | "low" | "medium" | "high" | "critical";
+
+export interface SecurityFinding {
+  id: string;
+  severity: SecuritySeverity;
+  title: string;
+  description: string;
+  affectedNodeIds: string[];
+  path: string[];
+  pathLabels: string[];
+  recommendation: string;
+}
+
+export interface SecurityAnalysisResult {
+  findings: SecurityFinding[];
+  exposurePaths: { source: string; target: string; path: string[]; pathLabels: string[] }[];
+  overallRisk: SecuritySeverity;
+}
+
+// ============================================================
+// Capacity Planning
+// ============================================================
+
+export interface CapacityPlan {
+  currentUsers: number;
+  annualGrowthRate: number;
+  planningYears: number;
+}
+
+export interface GrowthProjection {
+  year: number;
+  projectedUsers: number;
+}
+
+export interface SubnetUtilization {
+  vlanId: number;
+  vlanName: string;
+  subnet: string;
+  usableHosts: number;
+  currentAllocation: number;
+  utilizationPercent: number;
+  projectedNeed?: number;
+  status: "ok" | "warning" | "critical" | "exhausted";
+  recommendation?: string;
+}
+
+export interface CapacityAnalysisResult {
+  projections: GrowthProjection[];
+  subnetUtilizations: SubnetUtilization[];
+  switchPortAnalysis: { deviceId: string; label: string; usedPorts: number; totalPorts: number; utilization: number }[];
+  capacityIssues: { severity: ValidationSeverity; title: string; description: string; recommendation: string }[];
+}
+
+// ============================================================
+// Traffic Analysis
+// ============================================================
+
+export type TrafficType = "http" | "https" | "database" | "voip" | "video" | "general" | "custom";
+
+export interface TrafficProfile {
+  id: string;
+  sourceId: string;
+  targetId: string;
+  expectedBandwidthMbps: number;
+  trafficType: TrafficType;
+  label?: string;
+}
+
+export interface TrafficPathAnalysis {
+  path: string[];
+  pathLabels: string[];
+  segments: {
+    from: string;
+    to: string;
+    fromLabel: string;
+    toLabel: string;
+    bandwidthMbps: number;
+    connectionType: ConnectionType;
+    utilization: number;
+  }[];
+  bottleneckSegmentIndex: number | null;
+  maxUtilization: number;
+  isBottleneck: boolean;
+}
+
+export interface TrafficAnalysisResult {
+  pathAnalysis: TrafficPathAnalysis | null;
+  recommendations: string[];
+}
+
+// ============================================================
+// Architecture Versioning
+// ============================================================
+
+export interface ArchitectureVersion {
+  id: string;
+  projectId: string;
+  version: string;
+  name: string;
+  snapshot: {
+    nodes: NetworkNode[];
+    edges: NetworkEdge[];
+    vlans: VLAN[];
+  };
+  createdAt: string;
+}
+
+export interface VersionDiff {
+  fromVersion: string;
+  toVersion: string;
+  changes: {
+    type: "added" | "removed" | "modified";
+    entityType: "node" | "edge" | "vlan";
+    entityId: string;
+    entityLabel: string;
+    details?: string;
+  }[];
+}
+
+// ============================================================
+// Recommendations
+// ============================================================
+
+export type RecommendationPriority = "critical" | "high" | "medium" | "low";
+
+export interface Recommendation {
+  id: string;
+  priority: RecommendationPriority;
+  title: string;
+  why: string;
+  estimatedCost?: number;
+  impact: string;
+  affectedNodeIds: string[];
+  category: "redundancy" | "security" | "capacity" | "segmentation" | "configuration";
+}

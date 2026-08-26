@@ -25,6 +25,7 @@ import { timeAgo } from "@/lib/utils";
 import { getHighestSeverity } from "@/lib/validation";
 import { createDemoProject } from "@/lib/demo";
 import { validateTopology } from "@/lib/validation";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export default function ProjectsPage() {
   return (
@@ -61,27 +62,11 @@ function ProjectsPageContent() {
 
   const loadDemo = async () => {
     const demoProject = createDemoProject();
-    await useProjectStore.getState().createProject(demoProject.name, demoProject.description);
-    const projects = await useProjectStore.getState().loadProjects();
-    // Find the just-created project (last one)
-    const allProjects = useProjectStore.getState().projects;
-    const latest = allProjects.find((p) => p.name === demoProject.name);
-    if (latest) {
-      // Update with demo data
-      useProjectStore.getState().updateCurrentProject({
-        nodes: demoProject.nodes,
-        edges: demoProject.edges,
-        vlans: demoProject.vlans,
-      });
-      // Save it
-      const project = useProjectStore.getState().currentProject;
-      if (project) {
-        const { saveCurrentProject } = useProjectStore.getState();
-        await saveCurrentProject();
-      }
-      await loadProjects();
-      router.push(`/designer/${latest.id}`);
-    }
+    // Save the full demo project directly to IndexedDB
+    const { saveProject } = await import("@/lib/storage/database");
+    await saveProject(demoProject);
+    await loadProjects();
+    router.push(`/designer/${demoProject.id}`);
   };
 
   useEffect(() => {
@@ -151,6 +136,7 @@ function ProjectsPageContent() {
             <span className="font-semibold text-sm">NetArchitect</span>
           </Link>
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <Link
               href="/subnet-calculator"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"

@@ -141,6 +141,7 @@ function NodeProperties({ node }: { node: { id: string; data: { deviceType: stri
   };
 
   const info = DEVICE_TYPES[node.data.deviceType as keyof typeof DEVICE_TYPES];
+  const connectionCount = edges.filter(e => e.source === node.id || e.target === node.id).length;
 
   return (
     <div className="space-y-4">
@@ -163,6 +164,18 @@ function NodeProperties({ node }: { node: { id: string; data: { deviceType: stri
         </div>
       </div>
 
+      {/* Device Info Summary */}
+      <div className="grid grid-cols-2 gap-2">
+        <div className="bg-muted/30 rounded p-2">
+          <div className="text-[10px] text-muted-foreground uppercase">Connections</div>
+          <div className="text-sm font-bold">{connectionCount}</div>
+        </div>
+        <div className="bg-muted/30 rounded p-2">
+          <div className="text-[10px] text-muted-foreground uppercase">Category</div>
+          <div className="text-sm font-medium capitalize">{node.data.category}</div>
+        </div>
+      </div>
+
       {/* Network Configuration */}
       <div>
         <h3 className="text-xs font-semibold uppercase text-muted-foreground tracking-wider mb-2">
@@ -178,7 +191,7 @@ function NodeProperties({ node }: { node: { id: string; data: { deviceType: stri
             placeholder="192.168.1.1"
           />
           <FieldInput
-            label="Subnet"
+            label="Subnet (CIDR)"
             value={config.subnet}
             onChange={(v) => handleChange("subnet", v)}
             onBlur={() => handleBlur("subnet")}
@@ -194,7 +207,7 @@ function NodeProperties({ node }: { node: { id: string; data: { deviceType: stri
             placeholder="192.168.1.254"
           />
           <FieldInput
-            label="VLAN"
+            label="VLAN ID"
             value={config.vlan}
             onChange={(v) => handleChange("vlan", v)}
             onBlur={() => handleBlur("vlan")}
@@ -223,6 +236,7 @@ function NodeProperties({ node }: { node: { id: string; data: { deviceType: stri
       <button
         onClick={handleDelete}
         className="w-full flex items-center justify-center gap-2 px-3 py-2 text-xs text-red-500 border border-red-500/20 rounded-md hover:bg-red-500/5 transition-colors"
+        aria-label="Delete device"
       >
         <Trash2 className="w-3.5 h-3.5" />
         Delete Device
@@ -232,18 +246,21 @@ function NodeProperties({ node }: { node: { id: string; data: { deviceType: stri
 }
 
 function EdgeProperties({ edgeId }: { edgeId: string }) {
-  const { edges, updateEdge, removeEdges } = useTopologyStore();
+  const { edges, nodes, updateEdge, removeEdges } = useTopologyStore();
   const edge = edges.find((e) => e.id === edgeId);
   const [label, setLabel] = useState(edge?.data?.label || "");
 
   if (!edge) return null;
+
+  const sourceLabel = nodes.find(n => n.id === edge.source)?.data.label || edge.source;
+  const targetLabel = nodes.find(n => n.id === edge.target)?.data.label || edge.target;
 
   return (
     <div className="space-y-4">
       <div className="pb-3 border-b border-border">
         <h3 className="font-medium text-sm">Connection</h3>
         <p className="text-[11px] text-muted-foreground">
-          {edge.source} → {edge.target}
+          {sourceLabel} → {targetLabel}
         </p>
       </div>
 

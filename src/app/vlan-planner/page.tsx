@@ -11,6 +11,7 @@ import {
   AlertTriangle,
   X,
 } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useTopologyStore } from "@/stores/topologyStore";
 import { VLAN } from "@/types";
 import { isValidCIDR, parseCIDR } from "@/lib/network/ip";
@@ -38,6 +39,9 @@ export default function VLANPlannerPage() {
             <span className="font-semibold text-sm">NetArchitect</span>
           </Link>
           <span className="text-sm text-muted-foreground">/ VLAN Planner</span>
+          <div className="ml-auto">
+            <ThemeToggle />
+          </div>
         </div>
       </nav>
 

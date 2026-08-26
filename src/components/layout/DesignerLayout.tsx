@@ -17,6 +17,13 @@ import {
   Activity,
   DollarSign,
   Code2,
+  Zap,
+  Lock,
+  BarChart3,
+  GitBranch,
+  History,
+  Lightbulb,
+  TrafficCone,
 } from "lucide-react";
 import { useTopologyStore } from "@/stores/topologyStore";
 import { useProjectStore } from "@/stores/projectStore";
@@ -28,15 +35,21 @@ import { ValidationPanel } from "@/components/validation/ValidationPanel";
 import { HealthScore } from "@/components/validation/HealthScore";
 import { CostEstimatorPanel } from "@/components/devices/CostEstimatorPanel";
 import { ConfigExportPanel } from "@/components/devices/ConfigExportPanel";
+import { FailureSimulationPanel } from "@/components/analysis/FailureSimulationPanel";
+import { SecurityAnalysisPanel } from "@/components/analysis/SecurityAnalysisPanel";
+import { CapacityPlanningPanel } from "@/components/analysis/CapacityPlanningPanel";
+import { ScenarioPanel } from "@/components/analysis/ScenarioPanel";
+import { VersionHistoryPanel } from "@/components/analysis/VersionHistoryPanel";
+import { RecommendationsPanel } from "@/components/analysis/RecommendationsPanel";
+import { TrafficAnalysisPanel } from "@/components/analysis/TrafficAnalysisPanel";
 import { PathVisualization } from "@/components/canvas/PathVisualization";
 import { CommandPalette } from "@/components/ui/CommandPalette";
 import { OnboardingTour } from "@/components/ui/OnboardingTour";
 import { ConnectedTabs } from "@/components/ui/ConnectedTabs";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { validateTopology, getIssueCounts } from "@/lib/validation";
 import { debounce } from "@/lib/utils";
-import Link from "next/link";
-
-type RightTab = "properties" | "validation" | "health" | "cost" | "config";
+import Link from "next/link";  type RightTab = "properties" | "validation" | "health" | "cost" | "config" | "security" | "failure" | "capacity" | "traffic" | "scenarios" | "versions" | "recommendations";
 
 export function DesignerLayout() {
   const { currentProject, saveStatus, saveCurrentProject } = useProjectStore();
@@ -199,17 +212,25 @@ export function DesignerLayout() {
     setShowExportMenu(false);
   };
 
-  const rightTabs: { key: RightTab; label: string; icon: React.ReactNode; badge?: number }[] = [
-    { key: "properties", label: "Properties", icon: null },
+  const rightTabs: { key: RightTab; label: string; icon: React.ReactNode; badge?: number; group: string; shortLabel?: string }[] = [
+    { key: "properties", label: "Properties", icon: null, group: "design", shortLabel: "Props" },
     {
       key: "validation",
-      label: "Validation",
+      label: "Validate",
       icon: null,
       badge: counts ? counts.critical + counts.error : undefined,
+      group: "analyze",
     },
-    { key: "health", label: "Health", icon: <Activity className="w-3 h-3" /> },
-    { key: "cost", label: "Cost", icon: <DollarSign className="w-3 h-3" /> },
-    { key: "config", label: "Config", icon: <Code2 className="w-3 h-3" /> },
+    { key: "health", label: "Health Score", icon: <Activity className="w-3 h-3" />, group: "analyze" },
+    { key: "security", label: "Security", icon: <Lock className="w-3 h-3" />, group: "analyze" },
+    { key: "recommendations", label: "Recommendations", icon: <Lightbulb className="w-3 h-3" />, group: "analyze", shortLabel: "Recs" },
+    { key: "failure", label: "Simulate Failure", icon: <Zap className="w-3 h-3" />, group: "simulate", shortLabel: "Simulate" },
+    { key: "traffic", label: "Traffic Analysis", icon: <TrafficCone className="w-3 h-3" />, group: "analyze", shortLabel: "Traffic" },
+    { key: "scenarios", label: "Scenarios", icon: <GitBranch className="w-3 h-3" />, group: "compare" },
+    { key: "versions", label: "Version History", icon: <History className="w-3 h-3" />, group: "compare", shortLabel: "Versions" },
+    { key: "capacity", label: "Capacity Planning", icon: <BarChart3 className="w-3 h-3" />, group: "analyze", shortLabel: "Capacity" },
+    { key: "cost", label: "Cost Estimate", icon: <DollarSign className="w-3 h-3" />, group: "analyze", shortLabel: "Cost" },
+    { key: "config", label: "Config Export", icon: <Code2 className="w-3 h-3" />, group: "analyze", shortLabel: "Config" },
   ];
 
   return (
@@ -267,6 +288,9 @@ export function DesignerLayout() {
         </button>
 
         <div className="ml-auto flex items-center gap-2">
+          {/* Theme toggle */}
+          <ThemeToggle />
+
           {/* Save status */}
           <span className="text-xs text-muted-foreground flex items-center gap-1">
             {saveStatus === "saving" && (
@@ -391,14 +415,18 @@ export function DesignerLayout() {
                   key={tab.key}
                   onClick={() => setRightTab(tab.key)}
                   data-tour={`${tab.key}-tab`}
-                  className={`flex-1 min-w-0 py-2 text-[10px] sm:text-xs font-medium border-b-2 transition-colors flex items-center justify-center gap-1 ${
+                  className={`min-w-0 py-2 text-[10px] font-medium border-b-2 transition-colors flex items-center justify-center gap-1 px-1.5 shrink-0 ${
                     rightTab === tab.key
                       ? "border-foreground text-foreground"
                       : "border-transparent text-muted-foreground hover:text-foreground"
                   }`}
+                  title={tab.label}
+                  aria-label={tab.label}
                 >
                   {tab.icon}
-                  <span className="truncate">{tab.label}</span>
+                  <span className="truncate hidden xl:inline">{tab.label}</span>
+                  <span className="truncate xl:hidden hidden lg:inline">{tab.shortLabel || tab.label}</span>
+                  <span className="lg:hidden">{tab.icon && tab.key !== tab.label ? null : tab.shortLabel || tab.label.charAt(0)}</span>
                   {tab.badge !== undefined && tab.badge > 0 && (
                     <span className="px-1 py-0.5 text-[9px] bg-red-500/10 text-red-500 rounded-full font-bold">
                       {tab.badge}
@@ -412,17 +440,47 @@ export function DesignerLayout() {
             {rightTab === "properties" && <PropertiesPanel />}
             {rightTab === "validation" && <ValidationPanel />}
             {rightTab === "health" && <HealthScore />}
+            {rightTab === "security" && <SecurityAnalysisPanel />}
+            {rightTab === "failure" && (
+              <FailureSimulationPanel onClose={() => setRightTab("health")} />
+            )}
+            {rightTab === "scenarios" && (
+              <ScenarioPanel
+                onLoadScenario={(scenario) => {
+                  const { loadFromProject } = useTopologyStore.getState();
+                  loadFromProject(scenario.nodes, scenario.edges, scenario.vlans);
+                }}
+              />
+            )}
+            {rightTab === "versions" && (
+              <VersionHistoryPanel
+                onRestore={(ver) => {
+                  const { loadFromProject } = useTopologyStore.getState();
+                  loadFromProject(ver.snapshot.nodes, ver.snapshot.edges, ver.snapshot.vlans);
+                }}
+              />
+            )}
+            {rightTab === "traffic" && <TrafficAnalysisPanel />}
+            {rightTab === "capacity" && <CapacityPlanningPanel />}
             {rightTab === "cost" && <CostEstimatorPanel />}
             {rightTab === "config" && <ConfigExportPanel />}
+            {rightTab === "recommendations" && <RecommendationsPanel />}
           </div>
         </aside>
       </div>
 
       {/* Bottom Status Bar */}
       <footer className="h-7 border-t border-border flex items-center px-3 text-[11px] text-muted-foreground shrink-0 gap-4">
-        <span>{nodes.length} devices</span>
-        <span>{edges.length} connections</span>
-        {vlans.length > 0 && <span>{vlans.length} VLANs</span>}
+        {/* Left: Theme toggle + project stats */}
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <span className="text-border">│</span>
+          <span>{nodes.length} devices</span>
+          <span>{edges.length} connections</span>
+          {vlans.length > 0 && <span>{vlans.length} VLANs</span>}
+        </div>
+
+        {/* Right: Validation status + tabs */}
         {validationResults && (
           <span className="ml-auto">
             {validationResults.issues.length === 0

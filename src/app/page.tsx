@@ -21,6 +21,7 @@ import {
   Command,
   BarChart3,
 } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const FEATURES = [
   {
@@ -91,6 +92,7 @@ export default function LandingPage() {
             <span className="font-semibold text-sm">NetArchitect</span>
           </div>
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <Link
               href="/projects"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -120,8 +122,9 @@ export default function LandingPage() {
             Design. Validate. Understand Your Network.
           </h1>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-            Build network infrastructure visually, detect architectural problems,
-            calculate subnets, and validate your topology — entirely in your browser.
+            Build network infrastructure visually, detect architectural
+            problems, calculate subnets, and validate your topology — entirely
+            in your browser.
           </p>
           <div className="flex items-center justify-center gap-3">
             <Link
@@ -182,7 +185,10 @@ export default function LandingPage() {
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {FEATURES.map((feature) => (
-              <div key={feature.title} className="border border-border rounded-lg p-5 bg-card">
+              <div
+                key={feature.title}
+                className="border border-border rounded-lg p-5 bg-card"
+              >
                 <feature.icon className="w-5 h-5 mb-3 text-foreground" />
                 <h3 className="font-medium text-sm mb-1.5">{feature.title}</h3>
                 <p className="text-xs text-muted-foreground leading-relaxed">
@@ -203,12 +209,17 @@ export default function LandingPage() {
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-8">
             {STEPS.map((step, i) => (
-              <div key={step.number} className="flex flex-col items-center text-center">
+              <div
+                key={step.number}
+                className="flex flex-col items-center text-center"
+              >
                 <div className="w-10 h-10 rounded-full bg-foreground text-background flex items-center justify-center font-bold text-sm mb-3">
                   {step.number}
                 </div>
                 <h3 className="font-medium text-sm mb-1">{step.title}</h3>
-                <p className="text-xs text-muted-foreground">{step.description}</p>
+                <p className="text-xs text-muted-foreground">
+                  {step.description}
+                </p>
                 {i < STEPS.length - 1 && (
                   <ArrowRight className="hidden sm:block w-4 h-4 text-muted-foreground/50 mt-4" />
                 )}
@@ -223,7 +234,8 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-6 py-20">
           <h2 className="text-2xl font-bold mb-2">Intelligent validation</h2>
           <p className="text-muted-foreground mb-12">
-            NetArchitect actively analyzes your topology and provides actionable feedback
+            NetArchitect actively analyzes your topology and provides actionable
+            feedback
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <ValidationExample
@@ -251,10 +263,12 @@ export default function LandingPage() {
       {/* Technical Depth — Why This Stands Out */}
       <section className="border-t border-border">
         <div className="max-w-6xl mx-auto px-6 py-20">
-          <h2 className="text-2xl font-bold mb-2">Built with real engineering</h2>
-          <p className="text-muted-foreground mb-12">
+          <h2 className="text-2xl font-bold mb-2">
+            Built with real engineering
+          </h2>
+          {/* <p className="text-muted-foreground mb-12">
             Not a CRUD app. This is a graph-theory-powered network analysis tool.
-          </p>
+          </p> */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="border border-border rounded-lg p-5 bg-card">
               <div className="flex items-center gap-2 mb-3">
@@ -264,8 +278,9 @@ export default function LandingPage() {
                 <h3 className="font-medium text-sm">Graph Algorithms</h3>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Articulation point detection for single points of failure. BFS/DFS for path analysis and reachability. 
-                Minimum spanning tree validation for network redundancy.
+                Articulation point detection for single points of failure.
+                BFS/DFS for path analysis and reachability. Minimum spanning
+                tree validation for network redundancy.
               </p>
             </div>
             <div className="border border-border rounded-lg p-5 bg-card">
@@ -276,8 +291,9 @@ export default function LandingPage() {
                 <h3 className="font-medium text-sm">Real IP/CIDR Math</h3>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Bitwise subnet mask calculations, not string parsing. Subnet splitting, overlap detection, 
-                wildcard masks, and binary representation — all mathematically correct.
+                Bitwise subnet mask calculations, not string parsing. Subnet
+                splitting, overlap detection, wildcard masks, and binary
+                representation — all mathematically correct.
               </p>
             </div>
             <div className="border border-border rounded-lg p-5 bg-card">
@@ -288,14 +304,15 @@ export default function LandingPage() {
                 <h3 className="font-medium text-sm">Config Generation</h3>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Generates real Cisco IOS configs with interface declarations, ACLs, and NAT rules. 
-                iptables with FORWARD chains, MASQUERADE, and per-device security policies.
+                Generates real Cisco IOS configs with interface declarations,
+                ACLs, and NAT rules. iptables with FORWARD chains, MASQUERADE,
+                and per-device security policies.
               </p>
             </div>
           </div>
 
           {/* Tech Stack Callout */}
-          <div className="mt-12 border border-border rounded-lg bg-card p-6">
+          {/* <div className="mt-12 border border-border rounded-lg bg-card p-6">
             <h3 className="font-medium text-sm mb-4">Architecture & Tech Stack</h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {[
@@ -314,7 +331,7 @@ export default function LandingPage() {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -324,9 +341,11 @@ export default function LandingPage() {
           <Lock className="w-8 h-8 mx-auto mb-4 text-muted-foreground" />
           <h2 className="text-2xl font-bold mb-3">Your data stays yours</h2>
           <p className="text-muted-foreground max-w-xl mx-auto leading-relaxed text-sm">
-            NetArchitect is a local-first application. No network topology data is ever
+            {/* NetArchitect is a local-first application. No network topology data is ever
             uploaded to a server. All projects are stored in your browser&apos;s IndexedDB.
-            No accounts, no cloud storage, no tracking.
+            No accounts, no cloud storage, no tracking. */}
+            Design, validate, and simulate network infrastructure locally —
+            keeping sensitive topology data under your control.
           </p>
         </div>
       </section>
@@ -381,19 +400,21 @@ function ValidationExample({
   };
 
   return (
-    <div
-      className={`border rounded-lg p-4 ${colors[severity] || colors.info}`}
-    >
+    <div className={`border rounded-lg p-4 ${colors[severity] || colors.info}`}>
       <div className="flex items-center gap-2 mb-2">
         <span className={textColors[severity] || "text-muted-foreground"}>
           {icon}
         </span>
-        <span className={`text-xs font-medium uppercase ${textColors[severity]}`}>
+        <span
+          className={`text-xs font-medium uppercase ${textColors[severity]}`}
+        >
           {severity}
         </span>
       </div>
       <h3 className="font-medium text-sm mb-1">{title}</h3>
-      <p className="text-xs text-muted-foreground leading-relaxed">{description}</p>
+      <p className="text-xs text-muted-foreground leading-relaxed">
+        {description}
+      </p>
     </div>
   );
 }
