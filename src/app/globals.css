@@ -1,0 +1,199 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --primary: #18181b;
+  --primary-foreground: #fafafa;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #18181b;
+  --accent: #f4f4f5;
+  --accent-foreground: #18181b;
+  --destructive: #ef4444;
+  --destructive-foreground: #fafafa;
+  --ring: #18181b;
+  --sidebar-bg: #fafafa;
+  --sidebar-border: #e4e4e7;
+  --card: #ffffff;
+  --card-foreground: #171717;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --info: #3b82f6;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --muted: #1c1c1e;
+  --muted-foreground: #a1a1aa;
+  --border: #27272a;
+  --input: #27272a;
+  --primary: #fafafa;
+  --primary-foreground: #18181b;
+  --secondary: #27272a;
+  --secondary-foreground: #fafafa;
+  --accent: #27272a;
+  --accent-foreground: #fafafa;
+  --destructive: #dc2626;
+  --destructive-foreground: #fafafa;
+  --ring: #d4d4d8;
+  --sidebar-bg: #111113;
+  --sidebar-border: #27272a;
+  --card: #111113;
+  --card-foreground: #ededed;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --info: #3b82f6;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-ring: var(--ring);
+  --color-sidebar-bg: var(--sidebar-bg);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* React Flow overrides */
+.react-flow__minimap {
+  border: 1px solid var(--border) !important;
+  border-radius: 6px !important;
+  overflow: hidden;
+}
+
+.react-flow__background {
+  background-color: var(--background) !important;
+}
+
+.react-flow__controls {
+  border: 1px solid var(--border) !important;
+  border-radius: 6px !important;
+  overflow: hidden;
+  box-shadow: none !important;
+}
+
+.react-flow__controls-button {
+  background: var(--card) !important;
+  border-color: var(--border) !important;
+  fill: var(--foreground) !important;
+}
+
+.react-flow__controls-button:hover {
+  background: var(--muted) !important;
+}
+
+.react-flow__edge-path {
+  stroke: var(--muted-foreground) !important;
+}
+
+.react-flow__connection-line {
+  stroke: var(--info) !important;
+}
+
+.react-flow__node.selected .network-device-node {
+  outline: 2px solid var(--info) !important;
+  outline-offset: 2px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--foreground);
+}
+
+/* Network device node */
+.network-device-node {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  min-width: 100px;
+  text-align: center;
+  cursor: grab;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.network-device-node:hover {
+  border-color: var(--ring);
+}
+
+/* Validation panel */
+.validation-issue {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background-color 0.1s;
+}
+
+.validation-issue:hover {
+  background-color: var(--muted);
+}
+
+/* Device library item */
+.device-library-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: grab;
+  font-size: 13px;
+  transition: background-color 0.1s;
+  user-select: none;
+}
+
+.device-library-item:hover {
+  background-color: var(--muted);
+}
+
+/* Keyboard shortcut badge */
+.kbd {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  padding: 1px 5px;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
