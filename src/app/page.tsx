@@ -89,7 +89,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Network className="w-5 h-5 text-foreground" />
-            <span className="font-semibold text-sm">NetArchitect</span>
+            <span className="font-semibold text-sm">NetVerge</span>
           </div>
           <div className="flex items-center gap-3">
             <ThemeToggle />
@@ -234,7 +234,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-6 py-20">
           <h2 className="text-2xl font-bold mb-2">Intelligent validation</h2>
           <p className="text-muted-foreground mb-12">
-            NetArchitect actively analyzes your topology and provides actionable
+            NetVerge actively analyzes your topology and provides actionable
             feedback
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -341,7 +341,7 @@ export default function LandingPage() {
           <Lock className="w-8 h-8 mx-auto mb-4 text-muted-foreground" />
           <h2 className="text-2xl font-bold mb-3">Your data stays yours</h2>
           <p className="text-muted-foreground max-w-xl mx-auto leading-relaxed text-sm">
-            {/* NetArchitect is a local-first application. No network topology data is ever
+            {/* NetVerge is a local-first application. No network topology data is ever
             uploaded to a server. All projects are stored in your browser&apos;s IndexedDB.
             No accounts, no cloud storage, no tracking. */}
             Design, validate, and simulate network infrastructure locally —
@@ -355,7 +355,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Network className="w-4 h-4" />
-            <span>NetArchitect</span>
+            <span>NetVerge</span>
           </div>
           <p className="text-xs text-muted-foreground">
             Built for network engineers, by network engineers.

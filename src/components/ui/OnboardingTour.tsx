@@ -14,7 +14,7 @@ interface TourStep {
 const TOUR_STEPS: TourStep[] = [
   {
     target: "center",
-    title: "Welcome to NetArchitect",
+    title: "Welcome to NetVerge",
     content: "A professional network topology designer and validator. This tour will show you around the key features. It takes about 60 seconds.",
     position: "center",
   },
@@ -88,7 +88,7 @@ export function OnboardingTour() {
 
   // Show tour for first-time users
   useEffect(() => {
-    const hasSeenTour = localStorage.getItem("netarchitect-tour-completed");
+    const hasSeenTour = localStorage.getItem("NetVerge-tour-completed");
     if (!hasSeenTour) {
       // Delay to let the page render
       const timer = setTimeout(() => setIsActive(true), 1500);
@@ -117,7 +117,7 @@ export function OnboardingTour() {
   const completeTour = useCallback(() => {
     setIsActive(false);
     setTourCompleted(true);
-    localStorage.setItem("netarchitect-tour-completed", "true");
+    localStorage.setItem("NetVerge-tour-completed", "true");
     setCurrentStep(0);
   }, []);
 

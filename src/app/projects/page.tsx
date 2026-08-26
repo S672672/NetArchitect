@@ -133,7 +133,7 @@ function ProjectsPageContent() {
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Network className="w-5 h-5" />
-            <span className="font-semibold text-sm">NetArchitect</span>
+            <span className="font-semibold text-sm">NetVerge</span>
           </Link>
           <div className="flex items-center gap-3">
             <ThemeToggle />

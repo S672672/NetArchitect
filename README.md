@@ -1,4 +1,4 @@
-# NetArchitect
+# NetVerge
 
 **A browser-based Network Infrastructure Planning, Analysis, and Resilience Platform.**
 
@@ -6,9 +6,9 @@ Design network topologies visually, analyze architecture resilience, simulate fa
 
 ---
 
-## What is NetArchitect?
+## What is NetVerge?
 
-NetArchitect is a local-first network infrastructure decision-support tool. It goes beyond diagramming — it actively analyzes your network topology using graph algorithms, detects architectural weaknesses, simulates failure scenarios, and helps you compare design alternatives.
+NetVerge is a local-first network infrastructure decision-support tool. It goes beyond diagramming — it actively analyzes your network topology using graph algorithms, detects architectural weaknesses, simulates failure scenarios, and helps you compare design alternatives.
 
 ### Primary Product Loop
 
@@ -170,7 +170,7 @@ src/
 
 ## Why Local-First?
 
-NetArchitect is designed to work entirely in the browser for several reasons:
+NetVerge is designed to work entirely in the browser for several reasons:
 
 1. **Privacy**: Network infrastructure designs may contain sensitive information about an organization's network. Local-first means this data never leaves the user's machine.
 

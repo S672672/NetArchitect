@@ -50,7 +50,7 @@ class MultiTabSyncManager {
   connect(projectId: string) {
     if (this.channel) this.disconnect();
 
-    this.channel = new BroadcastChannel(`netarchitect-${projectId}`);
+    this.channel = new BroadcastChannel(`NetVerge-${projectId}`);
 
     this.channel.onmessage = (event: MessageEvent<SyncMessage>) => {
       this.handleMessage(event.data);

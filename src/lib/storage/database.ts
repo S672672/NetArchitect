@@ -18,12 +18,12 @@ export interface SettingsRecord {
   value: AppSettings;
 }
 
-class NetArchitectDB extends Dexie {
+class NetVergeDB extends Dexie {
   projects!: Table<ProjectRecord>;
   settings!: Table<SettingsRecord>;
 
   constructor() {
-    super("NetArchitectDB");
+    super("NetVergeDB");
     this.version(1).stores({
       projects: "id, name, createdAt, updatedAt",
       settings: "key",
@@ -31,7 +31,7 @@ class NetArchitectDB extends Dexie {
   }
 }
 
-export const db = new NetArchitectDB();
+export const db = new NetVergeDB();
 
 // ============================================================
 // Project CRUD

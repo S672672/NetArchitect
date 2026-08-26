@@ -123,7 +123,7 @@ export default function SubnetCalculatorPage() {
           </Link>
           <Link href="/" className="flex items-center gap-2">
             <Network className="w-4 h-4" />
-            <span className="font-semibold text-sm">NetArchitect</span>
+            <span className="font-semibold text-sm">NetVerge</span>
           </Link>
           <span className="text-sm text-muted-foreground">/ Subnet Calculator</span>
           <div className="ml-auto">

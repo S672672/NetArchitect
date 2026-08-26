@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NetArchitect — Network Infrastructure Designer",
+  title: "NetVerge — Network Infrastructure Designer",
   description:
     "Design, validate, and understand your network infrastructure. Build network topologies visually, detect architectural problems, and validate your topology — entirely in your browser.",
   keywords: ["network", "design", "topology", "infrastructure", "subnet", "VLAN", "validation"],

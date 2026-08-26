@@ -36,7 +36,7 @@ export default function VLANPlannerPage() {
           </Link>
           <Link href="/" className="flex items-center gap-2">
             <Network className="w-4 h-4" />
-            <span className="font-semibold text-sm">NetArchitect</span>
+            <span className="font-semibold text-sm">NetVerge</span>
           </Link>
           <span className="text-sm text-muted-foreground">/ VLAN Planner</span>
           <div className="ml-auto">
